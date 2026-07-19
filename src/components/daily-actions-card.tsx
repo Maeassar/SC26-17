@@ -4,8 +4,6 @@ export function DailyActionsCard({ actions }: { actions: DailyActions }) {
   return (
     <article className="daily-actions-card" aria-label="今日行动建议">
       <div className="daily-actions-inner">
-        <p className="eyebrow">DAILY ACTIONS</p>
-        <h3>今日行动提示</h3>
         <div className="actions-columns">
           <div className="actions-do">
             <strong>可以做</strong>

@@ -4,8 +4,6 @@ export function DietaryCard({ dietary }: { dietary: DietarySection }) {
   return (
     <article className="dietary-card" aria-label="今日饮食参考">
       <div className="dietary-inner">
-        <p className="eyebrow">DIETARY NOTE</p>
-        <h3>今日饮食参考</h3>
         <div className="dietary-tips">
           {dietary.tips.map((tip) => (
             <div className="dietary-tip" key={tip.category}>

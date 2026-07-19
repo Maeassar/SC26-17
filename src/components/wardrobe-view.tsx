@@ -133,7 +133,7 @@ export function WardrobeView({
         </div>
         {!readOnly && wardrobe.length > 0 && (
           <div className="wardrobe-actions">
-            <button className="outline" type="button" onClick={openNew}>添加单品</button>
+            <button className="wardrobe-action" type="button" onClick={openNew}>添加单品</button>
             <button
               className="text-danger"
               type="button"
@@ -162,18 +162,18 @@ export function WardrobeView({
             <button className="text-button neutral" type="button" onClick={closeEditor}>取消编辑</button>
           </div>
           <div className="item-form-grid">
-            <label htmlFor="item-name">衣物名称 <b aria-hidden="true">*</b>
+            <label htmlFor="item-name"><span>衣物名称 <b aria-hidden="true">*</b></span>
               <input id="item-name" required maxLength={80} value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} placeholder="例如：玉白亚麻短袖衬衫" />
             </label>
-            <label htmlFor="item-category">类别
+            <label htmlFor="item-category"><span>类别</span>
               <select id="item-category" value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value as Category })}>
                 {CATEGORIES.map((category) => <option key={category}>{category}</option>)}
               </select>
             </label>
-            <label htmlFor="color-name">主色名称 <b aria-hidden="true">*</b>
+            <label htmlFor="color-name"><span>主色名称 <b aria-hidden="true">*</b></span>
               <input id="color-name" required maxLength={30} value={form.colorName} onChange={(event) => setForm({ ...form, colorName: event.target.value })} />
             </label>
-            <label htmlFor="color-hex">主色 HEX
+            <label htmlFor="color-hex"><span>主色 HEX</span>
               <span className="color-input"><input id="color-hex" type="color" value={form.colorHex} onChange={(event) => setForm({ ...form, colorHex: event.target.value })} /><code>{form.colorHex.toUpperCase()}</code></span>
             </label>
           </div>

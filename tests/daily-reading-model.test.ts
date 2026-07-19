@@ -57,6 +57,7 @@ import {
   createDailyReading,
   createDailyReadingWithDiagnostics,
   MODEL_TOTAL_DEADLINE_MS,
+  SYSTEM_PROMPT,
   type ReadingAttemptDiagnostic,
 } from "@/lib/daily-reading";
 import type { DailyReadingRequestV4 } from "@/lib/types";
@@ -84,6 +85,32 @@ describe("model generation control flow", () => {
 
   afterEach(() => {
     vi.useRealTimers();
+  });
+
+  it("instructs the model to avoid unsupported material claims", () => {
+    expect(SYSTEM_PROMPT).toContain("outfit.reason");
+    expect(SYSTEM_PROMPT).toContain("不得写棉、麻、羊毛、针织、皮革等具体材质");
+  });
+
+  it("repairs unsupported material claims using only the fixed issue kind", async () => {
+    const unsupportedMaterial = makeModelOutput();
+    unsupportedMaterial.dailyStyle.outfits[0].reason = "所选上装采用亚麻。";
+    const corrected = makeModelOutput();
+    corrected.dailyStyle.outfits[0].reason = "以明净上装和利落轮廓保持通勤层次。";
+    openAiMocks.createCompletion
+      .mockResolvedValueOnce(completion(unsupportedMaterial))
+      .mockResolvedValueOnce(completion(corrected));
+
+    await expect(createDailyReading(request)).resolves.toMatchObject({ source: "model" });
+    const repairParams = openAiMocks.createCompletion.mock.calls[1][0] as {
+      messages: Array<{ role: string; content: string }>;
+    };
+    const repairSystem = repairParams.messages.find((message) => message.role === "system")?.content ?? "";
+    const repairPayload = JSON.parse(repairParams.messages.find((message) => message.role === "user")?.content ?? "{}") as Record<string, unknown>;
+    expect(repairPayload.validationIssueKinds).toEqual(["MATERIAL_UNGROUNDED"]);
+    expect(repairSystem).toContain("删除或改写");
+    expect(repairSystem).toContain("当前已选衣物");
+    expect(JSON.stringify(repairPayload.validationIssueKinds)).not.toContain("亚麻");
   });
 
   it("uses the fixed generation parameters and sends no precise birth date/time to the model", async () => {

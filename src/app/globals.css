@@ -197,12 +197,14 @@ code { overflow-wrap: anywhere; }
 .outfit-section .eyebrow { color: #bed0a9; }
 .outfit-section .section-heading > p:not(.eyebrow) { color: #c9d3cb; }
 .outfit-grid { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255, 255, 255, .18); }
-.outfit-card { min-width: 0; min-height: 440px; padding: 30px; display: flex; flex-direction: column; background: var(--ink); }
-.number { margin-bottom: 34px; opacity: .72; font: 12px Georgia, serif; }
+.outfit-card { min-width: 0; min-height: 440px; padding: 30px; display: flex; flex-direction: column; gap: 28px; background: var(--ink); }
+.outfit-card-top { min-width: 0; }
+.number { margin-bottom: 22px; opacity: .72; font: 12px Georgia, serif; }
 .outfit-card h3 { margin: 0 0 15px; font: 28px Georgia, "Songti SC", serif; overflow-wrap: anywhere; }
-.formula { color: #e0e9da; font-size: 16px; line-height: 1.7; }
-.outfit-card > p:not(.eyebrow):not(.formula):not(.alternative):not(.missing) { color: #c2cec5; line-height: 1.7; }
-.match-list { margin: auto 0 15px; display: flex; flex-wrap: wrap; gap: 7px; }
+.formula { margin: 0 0 14px; color: #e0e9da; font-size: 16px; line-height: 1.7; }
+.outfit-reason { margin: 0; color: #c2cec5; line-height: 1.7; overflow-wrap: anywhere; }
+.outfit-card-bottom { margin-top: auto; display: grid; gap: 10px; }
+.match-list { margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
 .match-list span { padding: 7px 9px; border: 1px solid rgba(255, 255, 255, .28); font-size: 12px; overflow-wrap: anywhere; }
 .match-list i { width: 9px; height: 9px; display: inline-block; margin-right: 6px; border: 1px solid rgba(255, 255, 255, .3); border-radius: 50%; }
 .match-list button { min-height: 44px; padding: 0; border: 0; background: transparent; color: #e0e9da; text-align: left; text-decoration: underline; }
@@ -300,6 +302,8 @@ fieldset legend { margin-bottom: 9px; color: var(--ink-soft); font-size: 14px; f
 .wardrobe-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
 .outline { min-height: 44px; padding: 10px 14px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font-weight: 700; }
 .outline:hover { background: #edf1e8; }
+.wardrobe-action { min-height: 38px; padding: 8px 0; border: 0; background: transparent; color: var(--ink); font-weight: 700; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 5px; }
+.wardrobe-action:hover { background: transparent; text-decoration-color: currentColor; }
 .outline.danger { border-color: var(--danger); color: var(--danger); }
 .text-danger { min-height: 44px; border: 0; background: transparent; color: var(--danger); text-decoration: underline; }
 .empty-state { margin: 18px 0 28px; padding: 28px; border: 1px dashed #aaa696; text-align: center; }
@@ -309,7 +313,10 @@ fieldset legend { margin-bottom: 9px; color: var(--ink-soft); font-size: 14px; f
 .empty-state p { max-width: 620px; margin: 8px auto; color: var(--muted); line-height: 1.7; }
 .item-form { margin-bottom: 30px; }
 .item-form h2 { margin: 0; font: 28px Georgia, "Songti SC", serif; }
-.item-form-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 12px; }
+.item-form-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; align-items: end; gap: 12px; }
+.item-form-grid > label { min-width: 0; grid-template-rows: 20px 44px; align-content: end; }
+.item-form-grid > label > input, .item-form-grid > label > select, .item-form-grid > label > .color-input { height: 44px; min-height: 44px; box-sizing: border-box; }
+.item-form-grid > label > b { white-space: nowrap; }
 .color-input { min-height: 44px; display: flex; align-items: center; gap: 8px; padding: 4px 9px; border: 1px solid #bdb7a8; background: var(--cream); }
 .color-input input { width: 38px !important; min-height: 34px; height: 34px; padding: 0; border: 0; background: transparent; }
 .color-input code { color: var(--muted); font-size: 12px; }
@@ -347,13 +354,20 @@ fieldset legend { margin-bottom: 9px; color: var(--ink-soft); font-size: 14px; f
 .connection dt { color: #bdc9c0; font-size: 13px; }
 .connection dd { margin: 0; font-size: 13px; text-align: right; overflow-wrap: anywhere; }
 .console-error { color: #ffd5c8 !important; }
-.setup ol { padding-left: 22px; color: #4c5d54; line-height: 2; }
-.setup code { padding: 3px 5px; background: var(--sand); }
-.setup p { color: var(--muted); font-size: 12px; }
+.setup-guide { margin-top: 18px; }
+.setup-guide summary { color: #f8f6ed; cursor: pointer; font-size: 13px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.setup-guide ol { padding-left: 20px; color: #d7e0d8; font-size: 13px; line-height: 1.75; }
+.setup-guide code { padding: 2px 4px; background: rgba(255, 255, 255, .12); }
+.setup-guide p { color: #c9d3cb; font-size: 12px; }
 .boundaries { padding: 0; }
-.boundaries summary { min-height: 68px; padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-weight: 700; list-style: none; }
+.boundaries summary { min-height: 96px; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; list-style: none; }
 .boundaries summary::-webkit-details-marker { display: none; }
+.boundaries summary > span { display: grid; gap: 0; }
+.boundaries .card-kicker { margin: 0 0 7px; }
+.boundaries h2 { margin: 0; }
+.boundaries summary > b { color: var(--sage); font: 30px/1 Georgia, serif; font-weight: 400; }
 .boundaries[open] summary { border-bottom: 1px solid var(--line); }
+.boundaries[open] summary > b { transform: rotate(45deg); }
 .boundaries > div { padding: 8px 28px 22px; color: var(--muted); line-height: 1.8; }
 .boundaries strong { color: var(--ink); }
 .data-control > p { color: var(--muted); line-height: 1.7; }
@@ -484,6 +498,8 @@ fieldset legend { margin-bottom: 9px; color: var(--ink-soft); font-size: 14px; f
 .generation-progress-copy > div > div { display: grid; gap: 4px; }
 .generation-progress-copy strong { font: 23px Georgia, "Songti SC", serif; }
 .generation-progress-copy p { margin: 0; color: var(--muted); font-size: 13px; }
+.generation-cancel-action { min-height: 38px; padding: 8px 0; border: 0; background: transparent; color: var(--ink-soft); font-weight: 700; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 5px; }
+.generation-cancel-action:hover { color: var(--ink); text-decoration-color: currentColor; }
 .loading-mark { width: 34px; height: 34px; flex: 0 0 auto; border: 3px solid #c6d0bd; border-top-color: var(--sage); border-radius: 50%; animation: loading-spin .9s linear infinite; }
 @keyframes loading-spin { to { transform: rotate(360deg); } }
 .skeleton-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -521,6 +537,9 @@ fieldset legend { margin-bottom: 9px; color: var(--ink-soft); font-size: 14px; f
 .next-step-card h2 { margin: 0; font: 27px Georgia, "Songti SC", serif; }
 .next-step-card p:not(.eyebrow), .wardrobe-next span { color: var(--muted); line-height: 1.6; }
 .next-step-actions, .form-submit-row, .settings-actions, .empty-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.settings-text-action { min-height: 38px; padding: 8px 0; border: 0; background: transparent; color: var(--ink-soft); font-weight: 700; text-align: left; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 5px; }
+.settings-text-action:hover { color: var(--ink); text-decoration-color: currentColor; }
+.settings-text-action.danger { color: var(--danger); }
 .demo-profile-card { margin-bottom: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--line); background: var(--line); }
 .demo-profile-card > div { min-width: 0; padding: 18px; display: grid; gap: 8px; background: var(--cream); }
 .demo-profile-card span { color: var(--muted); font-size: 12px; }

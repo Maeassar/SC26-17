@@ -35,7 +35,7 @@ function GenerationSkeleton({ startedAt, onCancel }: { startedAt: number; onCanc
     <section className="generation-progress" role="status" aria-live="polite" aria-busy="true">
       <div className="generation-progress-copy">
         <div><span className="loading-mark" aria-hidden="true" /><div><strong>正在整理配色、衣橱、签语与生活灵感</strong><p>已用 {(elapsed / 1000).toFixed(1)} 秒</p></div></div>
-        <button className="outline" type="button" onClick={onCancel}>取消生成</button>
+        <button className="generation-cancel-action" type="button" onClick={onCancel}>取消生成</button>
       </div>
       <div className="skeleton-grid" aria-hidden="true">
         <i /><i /><i />
@@ -109,9 +109,6 @@ export function TodayView({
   const modelState = getClientModelState(modelStatus);
   const canGenerate = modelState === "ready" || modelState === "checking";
   const previewOutfit = style?.outfits[0];
-  const previewItems = previewOutfit?.wardrobeItemIds
-    .map((id) => (wardrobe ?? []).find((item) => item.id === id && item.enabled))
-    .filter((item): item is WardrobeItemV3 => Boolean(item)) ?? [];
 
   return (
     <div className="page">
@@ -195,7 +192,6 @@ export function TodayView({
             <div className="preview-outfit">
               <p className="eyebrow">{previewOutfit?.scene ?? "通勤"} OUTFIT</p>
               <h2>{previewOutfit?.title ?? "玉白上装与自然色下装"}</h2>
-              <p>{previewItems.length ? previewItems.map((item) => item.name).join(" + ") : "玉白短袖衬衫 + 苔藓绿直筒裤"}</p>
             </div>
             <p className="trust-tag">透明计数 · 不推算流日吉凶或人生结果</p>
             {modelState === "invalid" && <em>模型配置无效，真实生成已暂停。</em>}
@@ -244,17 +240,21 @@ export function TodayView({
                   .filter((item): item is WardrobeItemV3 => Boolean(item));
                 return (
                   <article className="outfit-card" key={outfit.scene}>
-                    <div className="number">{String(index + 1).padStart(2, "0")}</div>
-                    <p className="eyebrow">{outfit.scene}</p>
-                    <h3>{outfit.title}</h3>
-                    <p className="formula">{outfit.formula}</p>
-                    <p>{outfit.reason}</p>
-                    <div className="match-list">
-                      {matched.map((item) => <span key={item.id}><i style={{ background: item.primaryColor.hex }} />{item.name}</span>)}
-                      {!matched.length && <button type="button" onClick={() => onNavigate("wardrobe")}>衣橱暂无匹配单品，去添加 →</button>}
+                    <div className="outfit-card-top">
+                      <div className="number">{String(index + 1).padStart(2, "0")}</div>
+                      <p className="eyebrow">{outfit.scene}</p>
+                      <h3>{outfit.title}</h3>
+                      <p className="formula">{outfit.formula}</p>
+                      <p className="outfit-reason">{outfit.reason}</p>
                     </div>
-                    {outfit.missingPieces.length > 0 && <p className="missing"><strong>可补充：</strong>{outfit.missingPieces.join("、")}</p>}
-                    <p className="alternative"><strong>替代：</strong>{outfit.alternative}</p>
+                    <div className="outfit-card-bottom">
+                      <div className="match-list">
+                        {matched.map((item) => <span key={item.id}><i style={{ background: item.primaryColor.hex }} />{item.name}</span>)}
+                        {!matched.length && <button type="button" onClick={() => onNavigate("wardrobe")}>衣橱暂无匹配单品，去添加 →</button>}
+                      </div>
+                      {outfit.missingPieces.length > 0 && <p className="missing"><strong>可补充：</strong>{outfit.missingPieces.join("、")}</p>}
+                      <p className="alternative"><strong>替代：</strong>{outfit.alternative}</p>
+                    </div>
                   </article>
                 );
               })}
